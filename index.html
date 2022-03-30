@@ -23,20 +23,27 @@
       position: absolute;
       top: 20px;
       left: 40px;
-      height: 40px;
+      height: 48px;
+    }
+
+    .btn {
+      margin-right: 5px;
+      height: 36px;
     }
   </style>
 </head>
 
 <body>
   <div id="cesiumContainer"></div>
-  <div class="btn-area bg-white rounded-xl sm:flex">
-    <button class="btn px-4 font-semibold rounded-full border border-purple-300" onclick="removeNavigation()">移除罗盘</button>
-    <button class="btn px-4 font-semibold rounded-full border border-purple-300" onclick="reRender()">重新生成罗盘</button>
+  <div class="btn-area rounded-xl sm:flex p-2">
+    <button class="btn bg-white px-4 font-semibold rounded-full border border-purple-300" onclick="removeNavigation()">移除罗盘</button>
+    <button class="btn bg-white px-4 font-semibold rounded-full border border-purple-300" onclick="reRender()">重新生成罗盘</button>
+    <button class="btn bg-white px-4 font-semibold rounded-full border border-purple-300" onclick=" setPosition()">设置默认显示区域</button>
   </div>
   <script type="module">
     import * as Cesium from "./node_modules/cesium/Source/Cesium.js"
     const Math = Cesium.Math
+    window.Cesium = Cesium
     window.CESIUM_BASE_URL = './node_modules/cesium/Build/Cesium'
 
     import CesiumNavigation from "./node_modules/cesium-navigation-es6/dist/CesiumNavigation.js";
@@ -89,6 +96,14 @@
         navigation = new CesiumNavigation(viewer, options);
       }
     }
+
+    function setPosition(rectangle) {
+      removeNavigation()
+      options.defaultResetView = Cesium.Rectangle.fromDegrees(80, 22, 130, 50)
+      reRender()
+    }
+
+    // other config same as setPosition function
   </script>
 </body>
 
